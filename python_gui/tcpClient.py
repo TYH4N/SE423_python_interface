@@ -10,9 +10,10 @@ from matplotlib.widgets import RadioButtons, Button
 TCP_IP = '192.168.1.72'
 TCP_PORT = 10001
 BUFFER_SIZE = 1024
-MESSAGE = "Hello, World!"
+MESSAGE = '123'
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((TCP_IP, TCP_PORT))
+
 # while True:
 #     s.send(MESSAGE.encode())
 #     data = s.recv(BUFFER_SIZE).decode().split(' ')
@@ -29,7 +30,7 @@ plt.subplots_adjust(bottom=0.2)
 plt.xlim(-15, 15)
 plt.ylim(-15, 15)
 points = []
-line, = ax.plot(points, 'o')
+line, = ax.plot(points, '.')
 
 color_rax = plt.axes([0.05, 0.5, 0.1, 0.15])
 color = 'blue'
@@ -61,22 +62,25 @@ def stop_receiving(event):
 stop_button.on_clicked(stop_receiving)
 
 def update_plot(frame):
+    x = 0
+    y = 0
     try:
         s.send(MESSAGE.encode())
         data = s.recv(BUFFER_SIZE).decode().split('\r\n')
-        data = data[1].split(' ')
-        x = data[0]
-        y = data[1]
-        theta = data[3]
-        if stop_flag and data:
-            point = [x,y]
-            point = [float(x) for x in point]
-            if not clear_flag:
-                points.append(point)
-                line.set_data(list(zip(*points)))
-                line.set_color(color)
+        data = data[0].split(' ')
+        print(data)
+        if (len(data) > 4):
+            x = data[0]
+            y = data[1]
+            theta = data[3]
+            if stop_flag and data:
+                point = [float(x), float(y)]
+                if not clear_flag:
+                    points.append(point)
+                    line.set_data(list(zip(*points)))
+                    line.set_color(color)
     except socket.timeout:
         pass
 
-ani = FuncAnimation(fig, update_plot, frames=None, repeat=True, blit=False, interval=500)
+ani = FuncAnimation(fig, update_plot, frames=None, repeat=True, blit=False, interval=100)
 plt.show()
