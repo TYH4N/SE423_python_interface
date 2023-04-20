@@ -5,9 +5,9 @@ from time import sleep
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from matplotlib.widgets import RadioButtons, Button
+import numpy as np
 
-
-TCP_IP = '192.168.1.72'
+TCP_IP = '192.168.1.69'
 TCP_PORT = 10001
 BUFFER_SIZE = 1024
 MESSAGE = '123'
@@ -25,10 +25,13 @@ s.connect((TCP_IP, TCP_PORT))
 # s.close()
 # print ("received data:", data)
 
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize = [9,20])
 plt.subplots_adjust(bottom=0.2)
-plt.xlim(-15, 15)
-plt.ylim(-15, 15)
+plt.xlim(-8.2, 8.2)
+plt.ylim(-0.2, 16.2)
+ax.set_xticks(np.arange(-8,9,1))
+ax.set_yticks(np.arange(0,17,1))
+ax.grid()
 points = []
 line, = ax.plot(points, '.')
 
@@ -84,3 +87,4 @@ def update_plot(frame):
 
 ani = FuncAnimation(fig, update_plot, frames=None, repeat=True, blit=False, interval=100)
 plt.show()
+
