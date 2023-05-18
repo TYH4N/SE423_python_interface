@@ -86,7 +86,9 @@ def draw_golf():
     for golf_ball in golf_balls:
         circle_golf = plt.Circle((golf_ball['x'], golf_ball['y']), 0.2, color = golf_ball['color'], fill = True)
         ax.add_patch(circle_golf)
+        # Generate golf text for golf ball textbox
         golf_text = golf_text + str(round(golf_ball['x'],1)) + ' ' + str(round(golf_ball['y'],1)) + ' ' + golf_ball['color'] + '\n'
+    # Set value to golf ball textbox
     txt_box_3.set_val(golf_text)
 
 # Draw obstacle
@@ -94,10 +96,13 @@ def draw_obstacle():
     for i in range(11):
         for j in range(11):
             if (obstacles[i, j]):
+                # Look for horizontal line
                 if (obstacles[i + 1, j]):
                     ax.plot([i - 5, i - 4], [11 - j, 11 - j], color = 'red')
+                # Look for vertical line
                 if (obstacles[i, j + 1]):
                     ax.plot([i - 5, i - 5], [11 - j, 10 - j], color = 'red')
+                # Corner cases
                 if (i == 0):
                     ax.plot([i - 6, i - 5], [11 - j, 11 - j], color = 'red')
                 if (i == 10):
@@ -156,5 +161,6 @@ def update_plot(frame):
     except socket.timeout:
         pass
 
+# Start animation
 animation = FuncAnimation(fig, update_plot, frames=None, repeat=True, blit=False, interval=refresh_interval)
 plt.show()
