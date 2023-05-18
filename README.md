@@ -16,7 +16,7 @@
 
 ![Image](img/1.png)
 
-### Implimentation:
+### Implementation:
 
 The interface uses the socket library to communicate with the raspberry Pi on the robot through TCP protocal. 
 
