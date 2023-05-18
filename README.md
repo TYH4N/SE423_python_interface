@@ -36,7 +36,7 @@ The data recieved from the raspberry is a string formatted from 8 float numbers:
 
 5. (Float) Golf ball y position (course coordinates)
 
-6. (Int) Golf ball color (-1 if not detected)
+6. (Int) Golf ball color (0 - Orange, 1 - Purple, and -1 if not detected)
 
 7. (Float) Obstacle x position (Astar coordinates) (0 if not detected)
 
